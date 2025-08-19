@@ -10,39 +10,42 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 let markers = []
 let markerCounter = 1
 
-// Custom marker icons for different colors
+
+ // Custom marker icons using Font Awesome
 const markerIcons = {
     blue: L.divIcon({
-        html: '<div style="background-color: #3388ff; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #3388ff;"></div>',
+        html: '<i class="fa-solid fa-location-dot" style="color: #3388ff; font-size: 24px;"></i>',
         className: "custom-marker",
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
     }),
     red: L.divIcon({
-        html: '<div style="background-color: #ff4444; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #ff4444;"></div>',
+        html: '<i class="fa-solid fa-location-dot" style="color: #ff4444; font-size: 24px;"></i>',
         className: "custom-marker",
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
     }),
     green: L.divIcon({
-        html: '<div style="background-color: #44ff44; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #44ff44;"></div>',
+        html: '<i class="fa-solid fa-location-dot" style="color: #44ff44; font-size: 24px;"></i>',
         className: "custom-marker",
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
     }),
     orange: L.divIcon({
-        html: '<div style="background-color: #ff8844; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #ff8844;"></div>',
+        html: '<i class="fa-solid fa-location-dot" style="color: #ff8844; font-size: 24px;"></i>',
         className: "custom-marker",
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
     }),
     purple: L.divIcon({
-        html: '<div style="background-color: #8844ff; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #8844ff;"></div>',
+        html: '<i class="fa-solid fa-location-dot" style="color: #8844ff; font-size: 24px;"></i>',
         className: "custom-marker",
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
     }),
 }
+
+
 
 // Add initial marker (matching your original coordinates)
 addMarkerToMap(
@@ -107,7 +110,7 @@ function addMarkerToMap(lat, lng, title, description, color) {
     markers.push(markerData)
     markerCounter++
 
-    updateMarkersList()
+  //  updateMarkersList()
 }
 
 function removeMarker(id) {
@@ -115,7 +118,7 @@ function removeMarker(id) {
     if (index > -1) {
         map.removeLayer(markers[index].marker)
         markers.splice(index, 1)
-        updateMarkersList()
+     //   updateMarkersList()
     }
 }
 
@@ -133,7 +136,7 @@ function clearAllMarkers() {
     })
     markers = []
     markerCounter = 1
-    updateMarkersList()
+   // updateMarkersList()
 }
 
 function updateMarkersList() {
@@ -194,3 +197,24 @@ setTimeout(() => {
         "orange"
     )
 }, 1000)
+
+
+// ✅ Listen for messages from Angular
+window.addEventListener("message", (event) => {
+ 
+
+    if (event.data.type === "SET_LATLNG") {
+        const { lat, lng } = event.data;
+        console.log("Received coordinates from Angular:", lat, lng);
+
+        // Update hidden controls
+        document.getElementById("lat").value = lat;
+        document.getElementById("lng").value = lng;
+        document.getElementById("title").value = `Marker from Angular`;
+        document.getElementById("description").value = `Sent via postMessage`;
+
+        
+        addMarker();
+
+    }
+});
