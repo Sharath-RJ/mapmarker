@@ -175,14 +175,14 @@ window.addEventListener("message", (event) => {
  
 
     if (event.data.type === "SET_LATLNG") {
-        const { lat, lng } = event.data;
+        const { lat, lng, head, desc } = event.data;
         console.log("Received coordinates from Angular:", lat, lng);
 
         // Update hidden controls
       let latitude =  document.getElementById("lat").value = lat;
       let longitude =  document.getElementById("lng").value = lng;
-      let title  =   document.getElementById("title").value = `Marker from Angular`;
-      let description =   document.getElementById("description").value = `Sent via postMessage`;
+      let title  =   document.getElementById("title").value = head || `Marker from Angular`;
+      let description = (document.getElementById("description").value = desc ||`Sent via postMessage`)
 
         
        
