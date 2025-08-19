@@ -47,14 +47,7 @@ const markerIcons = {
 
 
 
-// Add initial marker (matching your original coordinates)
-addMarkerToMap(
-    30.7333,
-    76.7794,
-    "Original Location",
-    "Your original marker location",
-    "blue"
-)
+
 
 // Click event to add markers
 map.on("click", function (e) {
@@ -88,7 +81,7 @@ function addMarker() {
     document.getElementById("description").value = ""
 }
 
-function addMarkerToMap(lat, lng, title, description, color) {
+function addMarkerToMap(lat, lng, title, description, color=blue) {
     const marker = L.marker([lat, lng], {
         icon: markerIcons[color],
     }).addTo(map)
@@ -108,6 +101,7 @@ function addMarkerToMap(lat, lng, title, description, color) {
     }
 
     markers.push(markerData)
+    console.log("markers................",markers)
     markerCounter++
 
   //  updateMarkersList()
@@ -173,30 +167,8 @@ function openDirections(lat, lng) {
     window.open(mapsUrl, "_blank")
 }
 
-// Add some sample markers for demonstration
-setTimeout(() => {
-    addMarkerToMap(
-        30.74,
-        76.78,
-        "Sample Location 1",
-        "This is a sample red marker",
-        "red"
-    )
-    addMarkerToMap(
-        30.73,
-        76.785,
-        "Sample Location 2",
-        "This is a sample green marker",
-        "green"
-    )
-    addMarkerToMap(
-        30.738,
-        76.775,
-        "Sample Location 3",
-        "This is a sample orange marker",
-        "orange"
-    )
-}, 1000)
+
+
 
 
 // ✅ Listen for messages from Angular
