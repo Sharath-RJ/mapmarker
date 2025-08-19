@@ -81,7 +81,7 @@ function addMarker() {
     document.getElementById("description").value = ""
 }
 
-function addMarkerToMap(lat, lng, title, description, color=blue) {
+function addMarkerToMap(lat, lng, title, description, color) {
     const marker = L.marker([lat, lng], {
         icon: markerIcons[color],
     }).addTo(map)
@@ -101,7 +101,6 @@ function addMarkerToMap(lat, lng, title, description, color=blue) {
     }
 
     markers.push(markerData)
-    console.log("markers................",markers)
     markerCounter++
 
   //  updateMarkersList()
@@ -167,7 +166,7 @@ function openDirections(lat, lng) {
     window.open(mapsUrl, "_blank")
 }
 
-
+// Add some sample markers for demonstration
 
 
 
@@ -180,13 +179,20 @@ window.addEventListener("message", (event) => {
         console.log("Received coordinates from Angular:", lat, lng);
 
         // Update hidden controls
-        document.getElementById("lat").value = lat;
-        document.getElementById("lng").value = lng;
-        document.getElementById("title").value = `Marker from Angular`;
-        document.getElementById("description").value = `Sent via postMessage`;
+      let latitude =  document.getElementById("lat").value = lat;
+      let longitude =  document.getElementById("lng").value = lng;
+      let title  =   document.getElementById("title").value = `Marker from Angular`;
+      let description =   document.getElementById("description").value = `Sent via postMessage`;
 
         
-        addMarker();
+       
+        addMarkerToMap(
+            latitude,
+            longitude,
+            title,
+            description,
+            "blue"
+        )
 
     }
 });
