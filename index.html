@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Markers Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Interactive Map with Multiple Markers</h1>
+            <p>Click on the map to add markers or use the form below</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Latitude:</label>
+                <input type="number" id="lat" step="0.0001" value="30.7333" placeholder="30.7333">
+            </div>
+            <div class="control-group">
+                <label>Longitude:</label>
+                <input type="number" id="lng" step="0.0001" value="76.7794" placeholder="76.7794">
+            </div>
+            <div class="control-group">
+                <label>Title:</label>
+                <input type="text" id="title" placeholder="Marker Title">
+            </div>
+            <div class="control-group">
+                <label>Description:</label>
+                <input type="text" id="description" placeholder="Marker Description">
+            </div>
+            <div class="control-group">
+                <label>Color:</label>
+                <select id="color">
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="orange">Orange</option>
+                    <option value="purple">Purple</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <button class="btn" onclick="addMarker()">Add Marker</button>
+                <button class="btn btn-danger" onclick="clearAllMarkers()">Clear All</button>
+            </div>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="marker-list">
+            <h3>Added Markers:</h3>
+            <div id="markersList"></div>
+        </div>
+    </div>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
