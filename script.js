@@ -424,7 +424,7 @@ window.addEventListener("message", (event) => {
 
     if (event.data.type === "SET_LATLNG") {
         const { lat, lng, name, city,state } = event.data;
-        console.log("Received coordinates from Angular:", lat, lng);
+        console.log("Received coordinates from Angular:", lat, lng,name, state, city);
 
         // Update hidden controls
       let latitude =  document.getElementById("lat").value = lat;
@@ -432,7 +432,7 @@ window.addEventListener("message", (event) => {
       let lawfirmName  =  name || "not specified"
       let lawfirmCity  =  city || "not specified"
       let lawfirmState = state || "not specified"
-      let description = (document.getElementById("description").value = desc ||`Sent via postMessage`)
+
 
         
        
@@ -442,7 +442,7 @@ window.addEventListener("message", (event) => {
             lawfirmName,
             lawfirmCity,
             lawfirmState,
-            "blue"
+            "red"
         )
 
     }
