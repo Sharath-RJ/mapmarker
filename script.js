@@ -396,9 +396,10 @@ window.addEventListener("message", (event) => {
          const { lat, lng } = event.data;
         console.log("Received coordinates from Angular:", lat, lng);
 
-        // Update hidden controls
-       currentlatitude =  document.getElementById("lat").value = lat;
-       currentlongitude =  document.getElementById("lng").value = lng;
+      
+       currentlatitude =  lat
+       currentlongitude =  lng
+       map.setView([currentlatitude, currentlongitude], 12) 
     
     }
 });
