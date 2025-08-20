@@ -392,7 +392,7 @@ window.addEventListener("message", (event) => {
 
     }
 
-    else if(event.data.type=="CURRENT_LOCATION"){
+    if(event.data.type=="CURRENT_LOCATION"){
          const { lat, lng } = event.data;
         console.log("Received coordinates from Angular:", lat, lng);
 
