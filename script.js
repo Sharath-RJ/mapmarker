@@ -411,11 +411,7 @@ function openDirections(lat, lng) {
 
 // Add some sample markers for demonstration
 
-        setTimeout(() => {
-            addLawfirmMarkerToMap(30.7400, 76.7800, 'Sample Location 1', 'This is a sample red marker',"lawfirmState", 'red');
-            addLawfirmMarkerToMap(30.7300, 76.7850, 'Sample Location 2', 'This is a sample green marker',"lawfirmState", 'green');
-            addLawfirmMarkerToMap(30.7380, 76.7750, 'Sample Location 3', 'This is a sample orange marker',"lawfirmState", 'orange');
-        }, 1000);
+       
 
 
 // ✅ Listen for messages from Angular
