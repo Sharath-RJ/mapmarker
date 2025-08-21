@@ -641,7 +641,7 @@ window.addEventListener("message", (event) => {
      if (event.data.type === "SET_LATLNG_LAWYER") {
          const { lat, lng, name, city, rating } = event.data
        
-
+        console.log("data got in the script", lat, lng, name, city, rating)
          // Update hidden controls
          let latitude = (document.getElementById("lat").value = lat)
          let longitude = (document.getElementById("lng").value = lng)
