@@ -349,6 +349,205 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
     //  updateMarkersList()
 }
 
+
+
+
+
+
+
+
+
+function addLawyerMarkerToMap( lat, lng,lawyerName,lawyerCity,lawyerRating,color){
+    const marker = L.marker([lat, lng], {
+        icon: markerIcons[color],
+    }).addTo(map)
+    marker.bindPopup(`
+  <div style="
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 240px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    background: #1e1e1e;
+    border: 1px solid #242424;
+  ">
+    
+    <!-- Header Section -->
+    <div style="
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: #567a4d;
+      color: white;
+    ">
+      <img src="https://via.placeholder.com/40" alt="Profile"
+           style="
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             margin-right: 10px;
+             object-fit: cover;
+             border: 2px solid rgba(255,255,255,0.2);
+           ">
+      <div style="flex: 1; min-width: 0;">
+        <div style="
+          font-weight: 600;
+          font-size: 14px;
+          margin-bottom: 2px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        ">${lawyerName}</div>
+        <div style="
+          font-size: 11px;
+          opacity: 0.9;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        ">Lawyer</div>
+      </div>
+    </div>
+    
+    <!-- Content Section -->
+    <div style="padding: 12px; background: #1e1e1e;">
+      
+      <!-- Service Areas - Compact -->
+      <div style="margin-bottom: 10px;">
+        <div style="
+          font-size: 10px;
+          font-weight: 500;
+          color: #6e6e6e;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 4px;
+        ">Coverage</div>
+        <div style="
+          color: #cdcdcd;
+          font-size: 12px;
+          line-height: 1.3;
+        ">${lawyerCity}</div>
+      </div>
+      
+      <!-- Rating - Inline -->
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #242424;
+      ">
+        
+        <span style="
+          font-size: 10px;
+          color: #6e6e6e;
+        ">${lawyerRating} reviews</span>
+      </div>
+      
+      <!-- Actions - Compact -->
+      <div style="display: flex; gap: 6px;">
+        <button onclick="openDirections(${lat}, ${lng})"
+               style="
+                 flex: 1;
+                 background: #567a4d;
+                 color: white;
+                 border: none;
+                 font-weight: 500;
+                 font-size: 11px;
+                 padding: 8px 10px;
+                 border-radius: 4px;
+                 cursor: pointer;
+                 transition: background-color 0.2s ease;
+               "
+               onmouseover="this.style.background='#4d6c46'"
+               onmouseout="this.style.background='#567a4d'">
+          🚗 Directions
+        </button>
+      
+      </div>
+      
+    </div>
+  </div>
+`)
+
+    let hoverTimeout
+    let popupOpen = false
+    let hoveringPopup = false
+
+    // When mouse enters the marker
+    marker.on("mouseover", function (e) {
+        clearTimeout(hoverTimeout)
+        if (!popupOpen) {
+            hoverTimeout = setTimeout(() => {
+                this.openPopup()
+                popupOpen = true
+            }, 300) // Open after 300ms delay
+        }
+    })
+
+    // When mouse leaves the marker
+    marker.on("mouseout", function (e) {
+        clearTimeout(hoverTimeout)
+        // Only start close timeout if not hovering over the popup
+        if (!hoveringPopup) {
+            hoverTimeout = setTimeout(() => {
+                if (popupOpen && !hoveringPopup) {
+                    this.closePopup()
+                    popupOpen = false
+                }
+            }, 500) // Close after 500ms delay
+        }
+    })
+
+    // When popup opens, track mouse events on it
+    marker.on("popupopen", function () {
+        const popupElement = this.getPopup().getElement()
+
+        // When mouse enters the popup
+        popupElement.addEventListener("mouseenter", function () {
+            hoveringPopup = true
+            clearTimeout(hoverTimeout)
+        })
+
+        // When mouse leaves the popup
+        popupElement.addEventListener("mouseleave", function () {
+            hoveringPopup = false
+            hoverTimeout = setTimeout(() => {
+                if (popupOpen) {
+                    marker.closePopup()
+                    popupOpen = false
+                }
+            }, 300)
+        })
+    })
+
+    // When popup closes, reset state
+    marker.on("popupclose", function () {
+        popupOpen = false
+        hoveringPopup = false
+        clearTimeout(hoverTimeout)
+    })
+
+    // Keep click functionality for mobile/touch devices
+    marker.on("click", function (e) {
+        this.openPopup()
+        popupOpen = true
+    })
+
+    const markerData = {
+        id: markerCounter,
+        marker: marker,
+        lat: lat,
+        lng: lng,
+        title: title,
+        description: description,
+        color: color,
+    }
+
+    markers.push(markerData)
+    markerCounter++
+}
+
 function removeMarker(id) {
     const index = markers.findIndex((m) => m.id === id)
     if (index > -1) {
@@ -418,30 +617,47 @@ function openDirections(lat, lng) {
 window.addEventListener("message", (event) => {
  
 
-    if (event.data.type === "SET_LATLNG") {
-        const { lat, lng, name, city,state } = event.data;
-        console.log("Received coordinates from Angular:", lat, lng,name, state, city);
+    if (event.data.type === "SET_LATLNG_LAWFIRM") {
+        const { lat, lng, name, city, state } = event.data
+      
 
         // Update hidden controls
-      let latitude =  document.getElementById("lat").value = lat;
-      let longitude =  document.getElementById("lng").value = lng;
-      let lawfirmName  =  name || "not specified"
-      let lawfirmCity  =  city || "not specified"
-      let lawfirmState = state || "not specified"
+        let latitude = (document.getElementById("lat").value = lat)
+        let longitude = (document.getElementById("lng").value = lng)
+        let lawfirmName = name || "not specified"
+        let lawfirmCity = city || "not specified"
+        let lawfirmState = state || "not specified"
 
-
-        
-       
         addLawfirmMarkerToMap(
             latitude,
             longitude,
             lawfirmName,
             lawfirmCity,
             lawfirmState,
-            "red"
+            "blue"
         )
-
     }
+
+     if (event.data.type === "SET_LATLNG_LAWYER") {
+         const { lat, lng, name, city, rating } = event.data
+       
+
+         // Update hidden controls
+         let latitude = (document.getElementById("lat").value = lat)
+         let longitude = (document.getElementById("lng").value = lng)
+         let lawyerName = name || "not specified"
+         let lawyerCity = city || "not specified"
+         let lawyerRating = rating || 0
+
+         addLawyerMarkerToMap(
+             latitude,
+             longitude,
+             lawyerName,
+             lawyerCity,
+             lawyerRating,
+             "red"
+         )
+     }
 
    
 });
