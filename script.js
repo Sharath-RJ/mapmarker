@@ -420,7 +420,7 @@ function addLawyerMarkerToMap( lat, lng,lawyerName,lawyerCity,lawyerRating,color
           text-transform: uppercase;
           letter-spacing: 0.5px;
           margin-bottom: 4px;
-        ">Coverage</div>
+        ">City</div>
         <div style="
           color: #cdcdcd;
           font-size: 12px;
