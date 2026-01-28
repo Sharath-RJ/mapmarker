@@ -619,6 +619,7 @@ window.addEventListener("message", (event) => {
 
     if (event.data.type === "SET_LATLNG_LAWFIRM") {
         const { lat, lng, name, city, state } = event.data
+        console.log("Lawfirm data received in mapmicroservice:", { lat, lng, name, city, state });
       
 
         // Update hidden controls
@@ -641,7 +642,7 @@ window.addEventListener("message", (event) => {
      if (event.data.type === "SET_LATLNG_LAWYER") {
          const { lat, lng, name, city, rating } = event.data
        
-        console.log("data got in the script", lat, lng, name, city, rating)
+        console.log("Lawyer data received in mapmicroservice:", { lat, lng, name, city, rating });
          // Update hidden controls
          let latitude = (document.getElementById("lat").value = lat)
          let longitude = (document.getElementById("lng").value = lng)
