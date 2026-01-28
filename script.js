@@ -159,7 +159,7 @@ function addMarker() {
         return
     }
 
-    addLawfirmMarkerToMap(lat, lng, title, description, color)
+    addLawfirmMarkerToMap(lat, lng, title, description, "", color)
 
     // Clear form
     document.getElementById("title").value = ""
@@ -338,8 +338,8 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
         marker: marker,
         lat: lat,
         lng: lng,
-        title: title,
-        description: description,
+        title: lawfirmName,
+        description: `${lawfirmCity}, ${lawfirmState}`,
         color: color,
     }
 
@@ -539,8 +539,8 @@ function addLawyerMarkerToMap( lat, lng,lawyerName,lawyerCity,lawyerRating,color
         marker: marker,
         lat: lat,
         lng: lng,
-        title: title,
-        description: description,
+        title: lawyerName,
+        description: `${lawyerCity} (Rating: ${lawyerRating})`,
         color: color,
     }
 
