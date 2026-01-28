@@ -202,9 +202,9 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
                     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                     overflow: hidden;
                 ">
-                    <img src="${image || 'assets/images/logo-default.jpg'}" 
+                    <img src="${image}" 
                          style="width: 100%; height: 100%; object-fit: contain; padding: 4px;"
-                         onerror="this.src='https://via.placeholder.com/48?text=Firm'">
+                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(lawfirmName)}&background=EBF4FF&color=1a365d&bold=true'">
                 </div>
                 <div style="flex: 1; min-width: 0;">
                     <div style="
@@ -378,7 +378,7 @@ function addLawyerMarkerToMap(lat, lng, lawyerName, lawyerCity, lawyerRating, im
       gap: 15px;
     ">
       <div style="position: relative;">
-        <img src="${image || 'assets/images/user-dummy.png'}" 
+        <img src="${image}" 
              alt="${lawyerName}"
              style="
                width: 60px;
@@ -388,7 +388,7 @@ function addLawyerMarkerToMap(lat, lng, lawyerName, lawyerCity, lawyerRating, im
                border: 3px solid rgba(255,255,255,0.2);
                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
              "
-             onerror="this.src='https://via.placeholder.com/60?text=Lawyer'">
+             onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(lawyerName)}&background=EBF4FF&color=2D3748&bold=true'">
         <div style="
             position: absolute;
             bottom: 2px;
