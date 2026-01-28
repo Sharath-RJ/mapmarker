@@ -5,6 +5,7 @@ let map = L.map("map", {
     dragging: true, 
     zoomControl: false,
     scrollWheelZoom: true, 
+    attributionControl: false,
 })
 
 // Add tile layer
