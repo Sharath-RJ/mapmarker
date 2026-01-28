@@ -166,7 +166,7 @@ function addMarker() {
     document.getElementById("description").value = ""
 }
 
-function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState, color) {
+function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState, image, color) {
     const marker = L.marker([lat, lng], {
         icon: markerIcons[color],
     }).addTo(map)
@@ -174,99 +174,96 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
     marker.bindPopup(
         `
         <div style="
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            width: 220px;
-            border-radius: 8px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            width: 260px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            background: #1e1e1e;
-            border: 1px solid #242424;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border: none;
         ">
-            
             <!-- Header Section -->
             <div style="
                 display: flex;
                 align-items: center;
-                padding: 12px;
-                background: #567a4d;
+                padding: 16px;
+                background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
                 color: white;
             ">
                 <div style="
-                    width: 36px;
-                    height: 36px;
-                    background: rgba(255,255,255,0.2);
-                    border-radius: 50%;
+                    width: 48px;
+                    height: 48px;
+                    background: white;
+                    border-radius: 8px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin-right: 10px;
-                    font-size: 16px;
-                ">⚖️</div>
+                    margin-right: 12px;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                ">
+                    <img src="${image || 'assets/images/logo-default.jpg'}" 
+                         style="width: 100%; height: 100%; object-fit: contain; padding: 4px;"
+                         onerror="this.src='https://via.placeholder.com/48?text=Firm'">
+                </div>
                 <div style="flex: 1; min-width: 0;">
                     <div style="
-                        font-weight: 600;
-                        font-size: 14px;
+                        font-weight: 700;
+                        font-size: 15px;
                         margin-bottom: 2px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
+                        line-height: 1.2;
                     ">${lawfirmName}</div>
                     <div style="
                         font-size: 11px;
-                        opacity: 0.9;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    ">Law Firm</div>
+                        opacity: 0.85;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        font-weight: 600;
+                    ">Established Law Firm</div>
                 </div>
             </div>
             
             <!-- Content Section -->
-            <div style="padding: 12px; background: #1e1e1e;">
-                
-                <!-- Location -->
-                <div style="margin-bottom: 12px;">
-                    <div style="
-                        font-size: 10px;
-                        font-weight: 500;
-                        color: #6e6e6e;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        margin-bottom: 4px;
-                    ">Location</div>
-                    <div style="
-                        color: #cdcdcd;
-                        font-size: 12px;
-                        line-height: 1.3;
-                    ">${lawfirmCity},${lawfirmState}</div>
+            <div style="padding: 16px; background: #f8fafc;">
+                <div style="margin-bottom: 16px; display: flex; align-items: flex-start;">
+                    <div style="color: #64748b; margin-right: 10px; font-size: 14px; margin-top: 2px;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-bottom: 2px;">Office Location</div>
+                        <div style="color: #334155; font-size: 13px; font-weight: 500;">${lawfirmCity}, ${lawfirmState}</div>
+                    </div>
                 </div>
                 
                 <!-- Actions -->
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 8px;">
                     <button onclick="openDirections(${lat}, ${lng})"
                            style="
                              flex: 1;
-                             background: #567a4d;
+                             background: #2563eb;
                              color: white;
                              border: none;
-                             font-weight: 500;
-                             font-size: 11px;
-                             padding: 8px 10px;
-                             border-radius: 4px;
+                             font-weight: 600;
+                             font-size: 12px;
+                             padding: 10px;
+                             border-radius: 6px;
                              cursor: pointer;
-                             transition: background-color 0.2s ease;
+                             display: flex;
+                             align-items: center;
+                             justify-content: center;
+                             gap: 6px;
+                             transition: all 0.2s ease;
+                             box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
                            "
-                           onmouseover="this.style.background='#4d6c46'"
-                           onmouseout="this.style.background='#567a4d'">
-                        🚗 Get Directions
+                           onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'"
+                           onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
+                        <i class="fas fa-directions"></i> Get Directions
                     </button>
-                   
                 </div>
-                
             </div>
         </div>
     `,
-        { closeButton: false, autoClose: false }
+        { closeButton: true, autoClose: false, className: 'enterprise-popup' }
     )
 
     let hoverTimeout
@@ -340,6 +337,7 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
         lng: lng,
         title: lawfirmName,
         description: `${lawfirmCity}, ${lawfirmState}`,
+        image: image,
         color: color,
     }
 
@@ -357,118 +355,116 @@ function addLawfirmMarkerToMap(lat, lng, lawfirmName, lawfirmCity, lawfirmState,
 
 
 
-function addLawyerMarkerToMap( lat, lng,lawyerName,lawyerCity,lawyerRating,color){
+function addLawyerMarkerToMap(lat, lng, lawyerName, lawyerCity, lawyerRating, image, color) {
     const marker = L.marker([lat, lng], {
         icon: markerIcons[color],
     }).addTo(map)
     marker.bindPopup(`
   <div style="
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    width: 240px;
-    border-radius: 8px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 280px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    background: #1e1e1e;
-    border: 1px solid #242424;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    background: #ffffff;
+    border: none;
   ">
-    
-    <!-- Header Section -->
+    <!-- Profile Header -->
     <div style="
+      padding: 20px;
+      background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
       display: flex;
       align-items: center;
-      padding: 12px;
-      background: #567a4d;
-      color: white;
+      gap: 15px;
     ">
-      <img src="https://via.placeholder.com/40" alt="Profile"
-           style="
-             width: 40px;
-             height: 40px;
-             border-radius: 50%;
-             margin-right: 10px;
-             object-fit: cover;
-             border: 2px solid rgba(255,255,255,0.2);
-           ">
-      <div style="flex: 1; min-width: 0;">
+      <div style="position: relative;">
+        <img src="${image || 'assets/images/user-dummy.png'}" 
+             alt="${lawyerName}"
+             style="
+               width: 60px;
+               height: 60px;
+               border-radius: 50%;
+               object-fit: cover;
+               border: 3px solid rgba(255,255,255,0.2);
+               box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+             "
+             onerror="this.src='https://via.placeholder.com/60?text=Lawyer'">
         <div style="
-          font-weight: 600;
-          font-size: 14px;
-          margin-bottom: 2px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        ">${lawyerName}</div>
-        <div style="
-          font-size: 11px;
-          opacity: 0.9;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        ">Lawyer</div>
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: #48BB78;
+            border: 2px solid #2D3748;
+            border-radius: 50%;
+        "></div>
+      </div>
+      <div style="flex: 1;">
+        <h3 style="
+          margin: 0;
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+        ">${lawyerName}</h3>
+        <span style="
+          display: inline-block;
+          background: rgba(66, 153, 225, 0.2);
+          color: #90CDF4;
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-size: 10px;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-top: 4px;
+        ">Verified Legal Expert</span>
       </div>
     </div>
     
-    <!-- Content Section -->
-    <div style="padding: 12px; background: #1e1e1e;">
-      
-      <!-- Service Areas - Compact -->
-      <div style="margin-bottom: 10px;">
-        <div style="
-          font-size: 10px;
-          font-weight: 500;
-          color: #6e6e6e;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          margin-bottom: 4px;
-        ">City</div>
-        <div style="
-          color: #cdcdcd;
-          font-size: 12px;
-          line-height: 1.3;
-        ">${lawyerCity}</div>
+    <!-- Info Body -->
+    <div style="padding: 20px; background: #ffffff;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <div>
+            <div style="font-size: 10px; color: #718096; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">City</div>
+            <div style="color: #2D3748; font-size: 13px; font-weight: 600;">${lawyerCity}</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 10px; color: #718096; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">Rating</div>
+            <div style="display: flex; align-items: center; gap: 4px; color: #2D3748; font-size: 13px; font-weight: 700;">
+                <span style="color: #ECC94B;">★</span>
+                <span>${lawyerRating} reviews</span>
+            </div>
+        </div>
       </div>
       
-      <!-- Rating - Inline -->
-      <div style="
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #242424;
-      ">
-        
-        <span style="
-          font-size: 10px;
-          color: #6e6e6e;
-        ">${lawyerRating} reviews</span>
-      </div>
-      
-      <!-- Actions - Compact -->
-      <div style="display: flex; gap: 6px;">
-        <button onclick="openDirections(${lat}, ${lng})"
-               style="
-                 flex: 1;
-                 background: #567a4d;
-                 color: white;
-                 border: none;
-                 font-weight: 500;
-                 font-size: 11px;
-                 padding: 8px 10px;
-                 border-radius: 4px;
-                 cursor: pointer;
-                 transition: background-color 0.2s ease;
-               "
-               onmouseover="this.style.background='#4d6c46'"
-               onmouseout="this.style.background='#567a4d'">
-          🚗 Directions
-        </button>
-      
-      </div>
-      
+      <!-- Action Footer -->
+      <button onclick="openDirections(${lat}, ${lng})"
+             style="
+               width: 100%;
+               background: #3182CE;
+               color: white;
+               border: none;
+               font-weight: 700;
+               font-size: 13px;
+               padding: 12px;
+               border-radius: 8px;
+               cursor: pointer;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               gap: 8px;
+               box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+               transition: all 0.2s ease;
+               margin-top: 10px;
+             "
+             onmouseover="this.style.background='#2B6CB0'; this.style.transform='translateY(-1px)'"
+             onmouseout="this.style.background='#3182CE'; this.style.transform='translateY(0)'">
+        <i class="fas fa-location-arrow"></i> Get Directions to Office
+      </button>
     </div>
   </div>
-`)
+`, { closeButton: true, autoClose: false, className: 'enterprise-popup' })
 
     let hoverTimeout
     let popupOpen = false
@@ -541,6 +537,7 @@ function addLawyerMarkerToMap( lat, lng,lawyerName,lawyerCity,lawyerRating,color
         lng: lng,
         title: lawyerName,
         description: `${lawyerCity} (Rating: ${lawyerRating})`,
+        image: image,
         color: color,
     }
 
@@ -618,8 +615,8 @@ window.addEventListener("message", (event) => {
  
 
     if (event.data.type === "SET_LATLNG_LAWFIRM") {
-        const { lat, lng, name, city, state } = event.data
-        console.log("Lawfirm data received in mapmicroservice:", { lat, lng, name, city, state });
+        const { lat, lng, name, city, state, image } = event.data
+        console.log("Lawfirm data received in mapmicroservice:", { lat, lng, name, city, state, image });
       
 
         // Update hidden controls
@@ -635,14 +632,15 @@ window.addEventListener("message", (event) => {
             lawfirmName,
             lawfirmCity,
             lawfirmState,
+            image,
             "blue"
         )
     }
 
      if (event.data.type === "SET_LATLNG_LAWYER") {
-         const { lat, lng, name, city, rating } = event.data
+         const { lat, lng, name, city, rating, image } = event.data
        
-        console.log("Lawyer data received in mapmicroservice:", { lat, lng, name, city, rating });
+        console.log("Lawyer data received in mapmicroservice:", { lat, lng, name, city, rating, image });
          // Update hidden controls
          let latitude = (document.getElementById("lat").value = lat)
          let longitude = (document.getElementById("lng").value = lng)
@@ -656,6 +654,7 @@ window.addEventListener("message", (event) => {
              lawyerName,
              lawyerCity,
              lawyerRating,
+             image,
              "red"
          )
      }
